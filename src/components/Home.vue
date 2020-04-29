@@ -41,9 +41,6 @@ export default {
       playlistItems: []
     };
   },
-  mounted() {
-    console.log(process.env);
-  },
   methods: {
     async getPlaylistData() {
       const {
