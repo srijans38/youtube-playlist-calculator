@@ -4,21 +4,31 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "dev": "vue-cli-service serve --port $PORT",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dev": "vue-cli-service serve --port $PORT"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "bootstrap-vue": "^2.1.0",
     "core-js": "^2.6.5",
     "vue": "^2.6.10"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.7.0",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "babel-eslint": "^10.0.1",
+    "bootstrap": "^4.3.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "mutationobserver-shim": "^0.3.3",
+    "popper.js": "^1.16.0",
+    "portal-vue": "^2.1.6",
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.0",
+    "vue-cli-plugin-bootstrap-vue": "~0.6.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -30,7 +40,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console" : "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
