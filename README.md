@@ -1,29 +1,14 @@
-![Vue.js Logo](https://github.com/zeit/now/blob/master/packages/frameworks/logos/vue.svg)
+![Logo](ytplcalc.png)
 
-# Vue.js Example
+## Usage
 
-This directory is a brief example of a [Vue.js](https://vuejs.org/) app that can be deployed with Vercel and zero configuration.
+Calculates the total duration of a given YouTube playlist.
+Just paste a URL with the `list` query parameter and hit Go.
 
-## Deploy Your Own
+_Live at: https://youtube-playlist-calculator.now.sh_
 
-Deploy your own Vue.js project with Vercel.
+## Created with 
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zeit/now/tree/master/examples/vue)
+![Vue.js](vue.svg) ![Vercel](vercel.svg)
 
-_Live Example: https://vue.now-examples.now.sh_
-
-### How We Created This Example
-
-To get started with Vue.js deployed with Vercel, you can use the [Vue CLI](https://cli.vuejs.org/guide/creating-a-project.html#vue-create) to initialize the project:
-
-```shell
-$ vue create
-```
-
-### Deploying From Your Terminal
-
-You can deploy your new Vue.js project with a single command from your terminal using [Now CLI](https://vercel.com/download):
-
-```shell
-$ now
-```
+[Vue.js](https://vuejs.org/) and [Vercel](https://vercel.com/)
