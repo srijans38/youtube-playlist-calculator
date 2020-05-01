@@ -12,6 +12,9 @@
     "axios": "^0.19.2",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^2.6.5",
+    "humanize-duration": "^3.22.0",
+    "iso8601-duration": "^1.2.0",
+    "moment": "^2.25.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -41,7 +44,7 @@
       "eslint:recommended"
     ],
     "rules": {
-      "no-console" : "off"
+      "no-console": "off"
     },
     "parserOptions": {
       "parser": "babel-eslint"
