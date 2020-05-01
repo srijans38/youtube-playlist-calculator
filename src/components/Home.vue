@@ -10,13 +10,28 @@
             placeholder="https://www.youtube.com/playlist?list=PL6rBC_87VKs76V9Vc0s44Gg_Q6qObZrFY"
           ></b-form-input>
           <b-input-group-append>
-            <b-button @click="parseAndGo" variant="outline-danger">Go</b-button>
-            <b-button @click="getPlaylistData" variant="outline-danger">Next</b-button>
+            <b-button :disabled="playlistId === undefined" @click="goCalc" variant="outline-danger">Go</b-button>
           </b-input-group-append>
         </b-input-group>
       </b-col>
     </b-row>
-    <hr />
+    <hr>
+    <transition name="list">
+      <b-row v-if="totalDuration.seconds != 0">
+        <b-col>
+          <b-card header="Total Playlist Duration" class="text-center mb-3">
+            <b-card-text>{{ totalDuration.string }}</b-card-text>
+          </b-card>
+          <hr>
+        </b-col>
+      </b-row>
+      <b-row v-if="loading" class="text-center">
+        <b-col>
+          <b-spinner variant="danger" type="grow" label="Loading"></b-spinner>
+          <hr>
+        </b-col>
+      </b-row>
+    </transition>
     <transition-group name="list" tag="div" class="row mb-5">
       <b-col
         class="text-center"
@@ -35,6 +50,7 @@
           class="mt-5 mx-2"
         >
           <b-card-title class="text-truncate">{{item.position+1 + '. ' + item.title }}</b-card-title>
+          <b-card-sub-title>{{ humanizeDuration(durations[item.videoId]) }}</b-card-sub-title>
           <b-card-text class="text-truncate">{{ item.description }}</b-card-text>
 
           <b-button
@@ -48,24 +64,50 @@
 </template>
 
 <script>
-import { getPlaylistDataAPI } from "@/api";
+import { getPlaylistDataAPI, getVideoDurationAPI } from "@/api";
+import humanizeDuration from 'humanize-duration';
+
 export default {
   name: "Home",
   data() {
     return {
       playlistItems: [],
-      playlistUrl:
-        "https://www.youtube.com/playlist?list=PLQVvvaa0QuDe8XSftW-RAxdo6OmaeL85M",
-      nextPageToken: ""
+      videoIds: [],
+      chunkedVideoIds: [],
+      durations: {},
+      playlistUrl: "",
+      nextPageToken: "",
+      loading: false
     };
   },
   computed: {
     playlistId() {
       var { list } = this.parseURL(this.playlistUrl);
       return list;
+    },
+    totalDuration() {
+      var seconds = Object.values(this.durations).reduce((a, b) => a + b, 0);
+      var string = "";
+      if (seconds) {
+        var date = new Date(0);
+        date.setSeconds(seconds);
+        string = humanizeDuration(seconds * 1000);
+      }
+      return {
+        seconds,
+        string
+      }
     }
   },
   methods: {
+    humanizeDuration(duration) {
+      return humanizeDuration(duration * 1000);
+    },
+    async getVideoDuration() {
+      this.getChunkedVideoIds();
+      var results = await getVideoDurationAPI(this.chunkedVideoIds);
+      this.durations = Object.assign({}, this.durations, results);
+    },
     async getPlaylistData() {
       const {
         data: { nextPageToken, items }
@@ -77,12 +119,16 @@ export default {
             position,
             publishedAt,
             resourceId: { videoId },
-            thumbnails: {
-              medium: { url }
-            },
+            thumbnails,
             title
           }
         } = item;
+        var url;
+        if(!thumbnails) {
+          url = '@/assets/not-found.png';
+        } else {
+          url = thumbnails.medium.url;
+        }
         this.playlistItems.push({
           description,
           position,
@@ -91,12 +137,17 @@ export default {
           thumbUrl: url,
           title
         });
+        this.videoIds.push(videoId);
       });
-      console.log(nextPageToken);
       this.nextPageToken = nextPageToken;
-      if (this.nextPageToken && this.nextPageToken != "") {
-        this.getPlaylistData();
+    },
+    getChunkedVideoIds() {
+      var results = [];
+      var arr = this.videoIds;
+      while (arr.length) {
+        results.push(arr.splice(0, 50));
       }
+      this.chunkedVideoIds = results;
     },
     parseURL(url) {
       var parser = document.createElement("a"),
@@ -112,12 +163,21 @@ export default {
       }
       return searchObject;
     },
-    parseAndGo() {
+    goPlayList() {
+      if (this.playlistId) {
+        this.getPlaylistData()
+      }
+    },
+    async goCalc() {
+      this.loading = true;
       this.playlistItems = [];
       this.nextPageToken = "";
-      if (this.playlistId) {
-        this.getPlaylistData();
+      while(this.nextPageToken || this.nextPageToken == "") {
+        await this.getPlaylistData();
       }
+      this.getVideoDuration().then(() => {
+        this.loading = false;
+      });
     }
   }
 };
