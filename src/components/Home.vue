@@ -85,6 +85,9 @@ export default {
       var { list } = this.parseURL(this.playlistUrl);
       return list;
     },
+    notFoundImg() {
+      return require('@/assets/not-found.png');
+    },
     totalDuration() {
       var seconds = Object.values(this.durations).reduce((a, b) => a + b, 0);
       var string = "";
@@ -125,7 +128,7 @@ export default {
         } = item;
         var url;
         if(!thumbnails) {
-          url = '@/assets/not-found.png';
+          url = this.notFoundImg;
         } else {
           url = thumbnails.medium.url;
         }
