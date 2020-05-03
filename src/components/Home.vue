@@ -1,37 +1,75 @@
 <template>
   <b-container>
     <b-row align-h="center" align-content="center">
-      <b-col class="text-center">
-        <h3 class="my-5">Youtube Playlist Calculator</h3>
+      <b-col>
+        <b-row align-v="center">
+          <b-col sm="2" lg="1" class="d-none d-sm-block">
+            <b-img src="@/assets/logo.png" fluid></b-img>
+          </b-col>
+          <b-col>
+            <h3 class="my-5 text-center">Youtube Playlist Calculator</h3>
+          </b-col>
+        </b-row>
         <hr />
         <b-input-group prepend="URL" class="my-5">
           <b-form-input
+            aria-label="Playlist URL"
+            id="playlist-url"
             v-model="playlistUrl"
             placeholder="https://www.youtube.com/playlist?list=PL6rBC_87VKs76V9Vc0s44Gg_Q6qObZrFY"
           ></b-form-input>
+
           <b-input-group-append>
-            <b-button :disabled="playlistId === undefined" @click="goCalc" variant="outline-danger">Go</b-button>
+            <b-button
+              :disabled="playlistId === undefined"
+              @click="goCalc"
+              variant="outline-danger"
+            >Go</b-button>
           </b-input-group-append>
         </b-input-group>
       </b-col>
     </b-row>
-    <hr>
-    <transition name="list">
-      <b-row v-if="totalDuration.seconds != 0">
+    <hr />
+    <transition-group name="fade" appear mode="in-out" @before-leave="beforeLeave">
+      <b-row v-if="totalDuration.seconds != 0" key="duration">
         <b-col>
           <b-card header="Total Playlist Duration" class="text-center mb-3">
             <b-card-text>{{ totalDuration.string }}</b-card-text>
           </b-card>
-          <hr>
+          <hr />
         </b-col>
       </b-row>
-      <b-row v-if="loading" class="text-center">
+      <b-row v-else-if="loading" class="text-center" key="loading">
         <b-col>
           <b-spinner variant="danger" type="grow" label="Loading"></b-spinner>
-          <hr>
+          <hr />
         </b-col>
       </b-row>
-    </transition>
+      <b-row v-else class="text-center" key="info">
+        <b-col>
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading mb-4">Hey!</h4>
+            <p>This app helps you to calculate the total duration of a YouTube playlist.</p>
+            <p>Just paste the URL above and hit Go.</p>
+            <hr />
+            <b-row align-v="center">
+              <b-col cols="1">
+                <a href="http://github.com/srijans38/youtube-playlist-calculator" class="text-dark">
+                  <i class="fab fa-github fa-2x"></i>
+                </a>
+              </b-col>
+              <b-col>
+                <p class="mb-0 mr-3 text-right">
+                  Made by
+                  <a href="http://github.com/srijans38" class="text-dark">Srijan Sharma</a>.
+                </p>
+              </b-col>
+            </b-row>
+          </div>
+          <hr />
+        </b-col>
+      </b-row>
+    </transition-group>
     <transition-group name="list" tag="div" class="row mb-5">
       <b-col
         class="text-center"
@@ -65,7 +103,7 @@
 
 <script>
 import { getPlaylistDataAPI, getVideoDurationAPI } from "@/api";
-import humanizeDuration from 'humanize-duration';
+import humanizeDuration from "humanize-duration";
 
 export default {
   name: "Home",
@@ -86,7 +124,7 @@ export default {
       return list;
     },
     notFoundImg() {
-      return require('@/assets/not-found.png');
+      return require("@/assets/not-found.png");
     },
     totalDuration() {
       var seconds = Object.values(this.durations).reduce((a, b) => a + b, 0);
@@ -99,7 +137,7 @@ export default {
       return {
         seconds,
         string
-      }
+      };
     }
   },
   methods: {
@@ -127,7 +165,7 @@ export default {
           }
         } = item;
         var url;
-        if(!thumbnails) {
+        if (!thumbnails) {
           url = this.notFoundImg;
         } else {
           url = thumbnails.medium.url;
@@ -168,19 +206,29 @@ export default {
     },
     goPlayList() {
       if (this.playlistId) {
-        this.getPlaylistData()
+        this.getPlaylistData();
       }
     },
     async goCalc() {
       this.loading = true;
       this.playlistItems = [];
       this.nextPageToken = "";
-      while(this.nextPageToken || this.nextPageToken == "") {
+      this.durations = Object.assign({}, {});
+      while (this.nextPageToken || this.nextPageToken == "") {
         await this.getPlaylistData();
       }
       this.getVideoDuration().then(() => {
         this.loading = false;
       });
+    },
+    beforeLeave(el) {
+      const { marginLeft, marginTop, width, height } = window.getComputedStyle(
+        el
+      );
+      el.style.left = `${el.offsetLeft - parseFloat(marginLeft, 10)}px`;
+      el.style.top = `${el.offsetTop - parseFloat(marginTop, 10)}px`;
+      el.style.width = width;
+      el.style.height = height;
     }
   }
 };
@@ -188,6 +236,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+
+h3 {
+  font-family: "Montserrat";
+}
 .list-enter-active,
 .list-leave-active {
   transition: all 1s;
@@ -195,5 +248,18 @@ export default {
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 2s;
+}
+
+.fade-leave-active {
+  position: absolute;
+}
+
+.fade-enter, .fade-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
