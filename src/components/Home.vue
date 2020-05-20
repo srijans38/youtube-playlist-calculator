@@ -145,11 +145,21 @@ export default {
       return humanizeDuration(duration * 1000);
     },
     async getVideoDuration() {
+      //Get video resource from the API
+
+      //Chunking the videoIds array; TODO : could be done in one step
       this.getChunkedVideoIds();
+
       var results = await getVideoDurationAPI(this.chunkedVideoIds);
+
+      //Setting durations and hiding loading anim
       this.durations = Object.assign({}, this.durations, results);
+      this.loading = false;
     },
     async getPlaylistData() {
+      //Get playlistItems resource from the API
+
+      //Destructuring needed resources from the response
       const {
         data: { nextPageToken, items }
       } = await getPlaylistDataAPI(this.playlistId, this.nextPageToken);
@@ -164,12 +174,16 @@ export default {
             title
           }
         } = item;
+
+        //handling if a thumbnail is not returned in case of a private video
         var url;
         if (!thumbnails) {
           url = this.notFoundImg;
         } else {
           url = thumbnails.medium.url;
         }
+
+        //setting state for playlists and videoIds
         this.playlistItems.push({
           description,
           position,
@@ -180,9 +194,12 @@ export default {
         });
         this.videoIds.push(videoId);
       });
+
+      //setting nextPageToken for pagination
       this.nextPageToken = nextPageToken;
     },
     getChunkedVideoIds() {
+      //Dividing the videoIds array into chunks of 50 each for API limit
       var results = [];
       var arr = this.videoIds;
       while (arr.length) {
@@ -191,6 +208,7 @@ export default {
       this.chunkedVideoIds = results;
     },
     parseURL(url) {
+      //Method to parse the PlaylistId attrib from the URL
       var parser = document.createElement("a"),
         searchObject = {},
         queries,
@@ -204,22 +222,17 @@ export default {
       }
       return searchObject;
     },
-    goPlayList() {
-      if (this.playlistId) {
-        this.getPlaylistData();
-      }
-    },
     async goCalc() {
+      //Onclick handler for Go button; resets vars and calls funcs
       this.loading = true;
       this.playlistItems = [];
       this.nextPageToken = "";
       this.durations = Object.assign({}, {});
       while (this.nextPageToken || this.nextPageToken == "") {
+        //Handling API Pagination
         await this.getPlaylistData();
       }
-      this.getVideoDuration().then(() => {
-        this.loading = false;
-      });
+      await this.getVideoDuration();
     },
     beforeLeave(el) {
       const { marginLeft, marginTop, width, height } = window.getComputedStyle(
