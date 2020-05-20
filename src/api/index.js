@@ -13,6 +13,17 @@ export const getPlaylistDataAPI = async (listId, nextPageToken) => {
     }
 }
 
+export const getPlaylistInfoAPI = async (listId) => {
+    try {
+        var url = `https://www.googleapis.com/youtube/v3/playlists?id=${listId}&part=snippet&key=${key}&fields=items(snippet(title,description))`
+        const response = await axios.get(url);
+        const { data : { items : [ { snippet } ] }   } = response;
+        return snippet;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getVideoDurationAPI = async (videosIds) => {
     let durations = {};
     try {

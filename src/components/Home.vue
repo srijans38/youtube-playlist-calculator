@@ -70,6 +70,14 @@
         </b-col>
       </b-row>
     </transition-group>
+    <transition name="list">
+      <b-row v-if="playlistTitle.length > 0" class="text-center">
+        <b-col class="text-center" sm="12">
+          <h3 class="my-4">{{ playlistTitle }}</h3>
+          <p class="text-truncate mx-5">{{ playlistDesc }}</p>
+        </b-col>
+      </b-row>
+    </transition>
     <transition-group name="list" tag="div" class="row mb-5">
       <b-col
         class="text-center"
@@ -102,13 +110,19 @@
 </template>
 
 <script>
-import { getPlaylistDataAPI, getVideoDurationAPI } from "@/api";
+import {
+  getPlaylistDataAPI,
+  getVideoDurationAPI,
+  getPlaylistInfoAPI
+} from "@/api";
 import humanizeDuration from "humanize-duration";
 
 export default {
   name: "Home",
   data() {
     return {
+      playlistTitle: "",
+      playlistDesc: "",
       playlistItems: [],
       videoIds: [],
       chunkedVideoIds: [],
@@ -228,6 +242,9 @@ export default {
       this.playlistItems = [];
       this.nextPageToken = "";
       this.durations = Object.assign({}, {});
+      const { title, description } = await getPlaylistInfoAPI(this.playlistId);
+      this.playlistTitle = title;
+      this.playlistDesc = description;
       while (this.nextPageToken || this.nextPageToken == "") {
         //Handling API Pagination
         await this.getPlaylistData();
