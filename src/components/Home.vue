@@ -194,8 +194,6 @@ export default {
         if (!thumbnails.medium) {
           url = this.notFoundImg;
         } else {
-          console.log(thumbnails);
-
           url = thumbnails.medium.url;
         }
 
