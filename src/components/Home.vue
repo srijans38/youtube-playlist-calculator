@@ -191,9 +191,11 @@ export default {
 
         //handling if a thumbnail is not returned in case of a private video
         var url;
-        if (!thumbnails) {
+        if (!thumbnails.medium) {
           url = this.notFoundImg;
         } else {
+          console.log(thumbnails);
+
           url = thumbnails.medium.url;
         }
 
