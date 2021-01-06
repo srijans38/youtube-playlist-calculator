@@ -4,7 +4,7 @@
       <b-col>
         <b-row align-v="center">
           <b-col sm="2" lg="1" class="d-none d-sm-block">
-            <b-img src="@/assets/logo.png" fluid></b-img>
+            <b-img src="@/assets/logo.png" alt="logo" fluid></b-img>
           </b-col>
           <b-col>
             <h3 class="my-5 text-center">Youtube Playlist Calculator</h3>
@@ -55,7 +55,7 @@
             <b-row align-v="center">
               <b-col cols="1">
                 <a href="http://github.com/srijans38/youtube-playlist-calculator" class="text-dark">
-                  <i class="fab fa-github fa-2x"></i>
+                  Source
                 </a>
               </b-col>
               <b-col>

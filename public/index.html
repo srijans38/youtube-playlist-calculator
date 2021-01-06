@@ -1,45 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<script src="https://kit.fontawesome.com/d766d3c89f.js" crossorigin="anonymous"></script>
-    <link rel="shortcut icon" href="<%= BASE_URL %>favicons/favicon.ico">
-	<link rel="icon" sizes="16x16 32x32 64x64" href="<%= BASE_URL %>favicons/favicon.ico">
-	<link rel="icon" type="image/png" sizes="196x196" href="<%= BASE_URL %>favicons/favicon-192.png">
-	<link rel="icon" type="image/png" sizes="160x160" href="<%= BASE_URL %>favicons/favicon-160.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="<%= BASE_URL %>favicons/favicon-96.png">
-	<link rel="icon" type="image/png" sizes="64x64" href="<%= BASE_URL %>favicons/favicon-64.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="<%= BASE_URL %>favicons/favicon-32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="<%= BASE_URL %>favicons/favicon-16.png">
-	<link rel="apple-touch-icon" href="<%= BASE_URL %>favicons/favicon-57.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="<%= BASE_URL %>favicons/favicon-114.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="<%= BASE_URL %>favicons/favicon-72.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="<%= BASE_URL %>favicons/favicon-144.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="<%= BASE_URL %>favicons/favicon-60.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="<%= BASE_URL %>favicons/favicon-120.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="<%= BASE_URL %>favicons/favicon-76.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="<%= BASE_URL %>favicons/favicon-152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>favicons/favicon-180.png">
-	<meta name="msapplication-TileColor" content="#FFFFFF">
-	<meta name="msapplication-TileImage" content="<%= BASE_URL %>favicons/favicon-144.png">
-	<meta name="msapplication-config" content="<%= BASE_URL %>favicons/browserconfig.xml">
-    <meta name="theme-color" content="#c4302b">
-    <meta name="description" content="Calculate the total duration of a YouTube Playlist.">
-	<meta property="og:title" content="Youtube Playlist Calculator" />
-	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Youtube Playlist Calculator">
-	<meta property="og:url" content="https://youtube-playlist-calculator.now.sh" />
-	<meta property="og:description" content="Calculate the total duration of a YouTube Playlist." />
-	<meta property="og:image:secure_url" itemprop="image" content="https://youtube-playlist-calculator.now.sh/favicons/favicon-310.png" />
-	<meta property="og:image" itemprop="image" content="http://youtube-playlist-calculator.now.sh/favicons/favicon-310.png" />
-    <link rel="canonical" href="https://youtube-playlist-calculator.now.sh"/>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="shortcut icon" href="<%= BASE_URL %>favicons/favicon.ico" />
+    <link
+      rel="icon"
+      sizes="16x16 32x32 64x64"
+      href="<%= BASE_URL %>favicons/favicon.ico"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="196x196"
+      href="<%= BASE_URL %>favicons/favicon-192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="160x160"
+      href="<%= BASE_URL %>favicons/favicon-160.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="<%= BASE_URL %>favicons/favicon-96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="64x64"
+      href="<%= BASE_URL %>favicons/favicon-64.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="<%= BASE_URL %>favicons/favicon-32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="<%= BASE_URL %>favicons/favicon-16.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="<%= BASE_URL %>favicons/favicon-57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="<%= BASE_URL %>favicons/favicon-114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="<%= BASE_URL %>favicons/favicon-72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="<%= BASE_URL %>favicons/favicon-144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="<%= BASE_URL %>favicons/favicon-60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="<%= BASE_URL %>favicons/favicon-120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="<%= BASE_URL %>favicons/favicon-76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="<%= BASE_URL %>favicons/favicon-152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="<%= BASE_URL %>favicons/favicon-180.png"
+    />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta
+      name="msapplication-TileImage"
+      content="<%= BASE_URL %>favicons/favicon-144.png"
+    />
+    <meta
+      name="msapplication-config"
+      content="<%= BASE_URL %>favicons/browserconfig.xml"
+    />
+    <meta name="theme-color" content="#c4302b" />
+    <meta
+      name="description"
+      content="Calculate the total duration of a YouTube Playlist."
+    />
+    <meta property="og:title" content="Youtube Playlist Calculator" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Youtube Playlist Calculator" />
+    <meta
+      property="og:url"
+      content="https://youtube-playlist-calculator.now.sh"
+    />
+    <meta
+      property="og:description"
+      content="Calculate the total duration of a YouTube Playlist."
+    />
+    <meta
+      property="og:image:secure_url"
+      itemprop="image"
+      content="https://youtube-playlist-calculator.now.sh/favicons/favicon-310.png"
+    />
+    <meta
+      property="og:image"
+      itemprop="image"
+      content="http://youtube-playlist-calculator.now.sh/favicons/favicon-310.png"
+    />
+    <link rel="canonical" href="https://ypc.now.sh" />
     <title>Youtube Playlist Calculator</title>
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but vue doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but vue doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
