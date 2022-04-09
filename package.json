@@ -14,7 +14,7 @@
     "core-js": "^2.6.5",
     "humanize-duration": "^3.22.0",
     "iso8601-duration": "^1.2.0",
-    "moment": "^2.25.0",
+    "moment": "^2.29.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {
